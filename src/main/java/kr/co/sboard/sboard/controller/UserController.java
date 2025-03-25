@@ -83,12 +83,13 @@ public class UserController {
     @PostMapping("/user/email/auth")
     public ResponseEntity<Boolean> emailAuth(@RequestBody Map<String,String> map, HttpSession session){//JSON 단일 문자열값이 직접 String으로 매핑되지
 
+        String authCode = map.get("authCode");
         log.info("email auth code = ", map.get("authCode"));
 
-        String authCode = map.get("authCode");
-        String sessAttribute= (String) session.getAttribute("authCode");
+        String sessAuthCode= (String) session.getAttribute("authCode");
+        log.info("email auth sess attribute ", sessAuthCode);
 
-        if (authCode.equals(sessAttribute)){
+        if (authCode.equals(sessAuthCode)){
             return ResponseEntity.ok().body(true);
         }
         return ResponseEntity.ok().body(false);
