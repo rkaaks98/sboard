@@ -33,7 +33,7 @@ spring:
         version: '@version@'
     datasource:
         driver-class-name: com.mysql.cj.jdbc.Driver
-        password: Qwert123@
+        password: Qwerty123@
         url: jdbc:mysql://3.34.124.218:3306/board
         username: board
     devtools:
