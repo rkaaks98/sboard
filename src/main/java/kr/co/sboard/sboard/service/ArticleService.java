@@ -1,21 +1,58 @@
 package kr.co.sboard.sboard.service;
 
-import jakarta.persistence.Entity;
+import com.querydsl.core.Tuple;
 import kr.co.sboard.sboard.dao.ArticleMapper;
 import kr.co.sboard.sboard.dto.ArticleDTO;
+import kr.co.sboard.sboard.dto.PageRequestDTO;
+import kr.co.sboard.sboard.dto.PageResponseDTO;
 import kr.co.sboard.sboard.entity.Article;
-import kr.co.sboard.sboard.repository.ArticleRepositorty;
+import kr.co.sboard.sboard.repository.ArticleRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+
+@Slf4j
 @RequiredArgsConstructor
 @Component
 public class ArticleService {
 
-    private final ArticleRepositorty articleRepositorty;
+    private final ArticleRepository articleRepositorty;
     private final ModelMapper modelMapper;
     private final ArticleMapper articleMapper;
+
+    public PageResponseDTO findAll(PageRequestDTO pageRequestDTO) {
+
+        //페이징 처리를 위한 pageable 객체 생성
+        Pageable pageable = pageRequestDTO.getPageable("no");
+
+        Page<Tuple> pageArticle = articleRepositorty.selectAllForList(pageable);
+        log.info("pageArticle : {}", pageArticle);
+
+        //article Entity 리스트를 ArticleDTO 리스트로 변환
+        List<ArticleDTO> articleDTOList = pageArticle.getContent().stream().map(tuple -> {
+            Article article = tuple.get(0, Article.class);
+            String nick = tuple.get(1, String.class);
+
+            ArticleDTO articleDTO = modelMapper.map(article, ArticleDTO.class);
+            articleDTO.setNick(nick);
+
+            return articleDTO;
+        }).toList();
+
+        int total = (int) pageArticle.getTotalElements();
+
+        return PageResponseDTO
+                .builder()
+                .pageRequestDTO(pageRequestDTO)
+                .dtoList(articleDTOList)
+                .total(total)
+                .build();
+    }
 
     public int register(ArticleDTO articleDTO){
 

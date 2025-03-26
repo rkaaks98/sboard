@@ -27,6 +27,13 @@ public class ArticleDTO {
     private String regip;
     private String wdate;
 
+    //추가필드
+    private String nick;
+
+    public String getWdate(){
+        return wdate.substring(0, 10);
+    }
+
     private MultipartFile file1;
     private MultipartFile file2;
 
