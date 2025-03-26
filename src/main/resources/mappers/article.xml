@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.co.sboard.sboard.dao.ArticleMapper">
+
+    <!-- Insert한 데이터의 no값을 반환받기 위해 useGeneratedKey, keyProperty 속성 선언 -->
+    <insert id="insertArticle" parameterType="kr.co.sboard.sboard.dto.ArticleDTO" useGeneratedKeys="true" keyProperty="no">
+        INSERT INTO `Article` (`title`, `file`, `content`, `writer`, `regip`, `wdate`)
+        VALUES (#{title}, #{file}, #{content}, #{writer}, #{regip}, NOW())
+    </insert>
+
+</mapper>

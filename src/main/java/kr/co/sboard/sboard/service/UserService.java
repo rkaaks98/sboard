@@ -3,6 +3,7 @@ package kr.co.sboard.sboard.service;
 import jakarta.mail.Message;
 import jakarta.mail.internet.InternetAddress;
 import jakarta.mail.internet.MimeMessage;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import kr.co.sboard.sboard.dto.UserDTO;
 import kr.co.sboard.sboard.entity.User;
@@ -26,7 +27,7 @@ public class UserService {
     private final ModelMapper modelMapper;
     private final PasswordEncoder passwordEncoder;
     private final JavaMailSender mailSender;
-    private final HttpSession session;
+    private final HttpServletRequest request;
 
     public void register(UserDTO userDTO){
         
@@ -36,8 +37,9 @@ public class UserService {
 
         //엔티티 변환
         User user= modelMapper.map(userDTO, User.class);
+        log.info("user: {}", user);
 
-        User savedUser= userRepository.save(user);
+        userRepository.save(user);
 
     }
 
@@ -56,8 +58,8 @@ public class UserService {
                 String code = sendEmailCode(value);
 
                 //인증코드 비교를 하기 위해서 세션 저장
+                HttpSession session = request.getSession();
                 session.setAttribute("authCode", code);
-
             }
         }else if (type.equals("hp")) {
             count = userRepository.countByHp(value);

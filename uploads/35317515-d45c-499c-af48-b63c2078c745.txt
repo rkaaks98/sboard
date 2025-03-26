@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>공지사항</title>
+        <link rel="stylesheet" href="/static/common/css/_header.css">
+        <style>
+            /* 초기화 */
+        * {
+            margin: 0;
+            padding: 0;
+            font: normal 12px "Noto Sans Korean", sans-serif;
+        }
+
+        ul,
+        ol {
+            list-style: none;
+        }
+
+        a {
+            text-decoration: none;
+            color: #111;
+        }
+
+        input,
+        textarea {
+            outline: none;
+        }
+
+        #wrapper {
+            max-width: 1920px;
+            width: 100%;
+            height: auto;
+        }
+/*ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ*/
+        /*homebar*/
+        .homebar {
+            width: 100%;
+            height: auto;
+            background-color: #ECF2F6;
+            margin-bottom: 60px;
+        }
+        .homebar .inline {
+            width: 100%;
+            max-width: 1200px;
+            height: auto;
+            margin: 0 auto;
+            text-align: right;
+            padding: 5px;
+        }
+        .homebar .inline img:nth-of-type(1) {
+            margin-left: 8px;
+        }
+        .homebar .inline a:nth-of-type(1) {
+            position: relative;
+            top: 2px;
+        }
+        .homebar .inline a:nth-of-type(2) {
+            margin-right: 10px;
+            position: relative;
+            bottom: 1px;
+            margin-left: 8px;
+        }
+        .homebar .inline a:nth-of-type(3) {
+            margin-right: 10px;
+            margin-left: 8px;
+            position: relative;
+            bottom: 1px;
+            left: 2px;
+        }
+/*ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ*/
+        /*메인*/
+        main {
+            display: flex;
+            width: 100%;
+            max-width: 1200px;
+            height: auto;
+            margin: 0 auto;
+        }
+/*ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ*/
+        /*사이드*/
+        main .side {
+            width: 210px;
+            flex-shrink: 0;
+        }
+        main .side h4 {
+            font-size: 32px;
+            font-weight: bold;
+        }
+        main .side ul {
+            text-align: left;
+            border-top: 2px solid black;
+            width: 210px;
+        }
+        main .side ul li {
+            border-bottom: 1px solid #DCDCDC;
+            padding: 20px 15px;
+        }
+        main .side ul li a {
+            font-size: 16px;
+        }
+        main .side ul li:hover {
+            background: #3F97F6;
+        }
+        main .side ul li:hover a {
+            color: white;
+        }
+/*ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ*/
+        /*공지사항*/
+        main .notice {
+            width: 100%;
+            max-width: 930px;
+            padding-left: 60px;
+            flex-grow: 1;
+        }
+        main .notice .noticetop {
+            width: 100%;
+            height: auto;
+            border-bottom: 2px solid black;
+            margin-bottom: 25px;
+        }
+        main .notice .noticetop h4 {
+            font-size: 26px;
+            font-weight: bold;
+            margin-bottom: 8px;
+        }
+ /*ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ*/
+        /*search*/
+        main .search {
+            float: right;
+            display: flex;
+            
+        }
+        main .search .dropdown {
+            appearance: none;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            width: 150px;
+            padding: 10px;
+            margin-right: 5px;
+            border: 1px solid #DEDEDE;
+            color: #666666;
+            font-size: 15px;
+        }
+        main .search input {
+            padding: 10px;
+            width: 237px;
+            border: 1px solid #DEDEDE;
+            color: #666666;
+            font-size: 15px;
+        }
+        main .search .searchbtn {
+            padding: 10px 20px;
+            background-color: #3F97F6;
+            border: 1px solid #3F97F6;
+        }
+        main .search .searchbtn a {
+            color: white;
+            font-size: 15px;
+        }
+/*ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ*/
+        /*noticemain*/
+        main .notice .noticemain {
+            width: 100%;
+            height: auto;
+            float: right;
+        }
+        main .notice .noticemain table {
+            width: 100%;
+            height: auto;
+            border-top: 2px solid black;
+            margin-top: 20px;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+        main .notice .noticemain table tr:nth-of-type(1) th {
+            padding: 17px 10px;
+            background-color: #FAFAFA;
+            font-size: 16px;
+            font-weight: bold;
+            border-bottom: 1px solid #A3A3A3;
+        }
+        main .notice .noticemain table tr td {
+            font-size: 16px;
+            text-align: center;
+            padding: 17px 10px;
+            border-bottom: #D8D8D8 1px solid;
+        }
+        main .notice .noticemain table tr td img {
+            margin-right: 5px;
+            position: relative;
+            top: 2px;
+        }
+        main .notice .noticemain table tr td:nth-of-type(2) {
+            text-align: left;
+        }
+        
+        main .notice .noticemain .pagebtn {
+            text-align: center;
+        }
+        main .notice .noticemain .pagebtn a {
+            font-size: 15px;
+            padding: 4px 10px;
+            border: 1px solid #DEDEDE;
+        }
+        
+        
+        </style>
+    </head>
+    <body>
+        <div id="wrapper">
+            <header>
+                <div class="nav">
+                    <div class="navbar">
+                        <div class="navbar-item"><a href="#">HOME</a></div>
+                        <div class="navbar-item"><a href="#">사이트맵</a></div>
+                        <div class="navbar-item"><a href="#">로그인</a></div>
+                        <div class="navbar-item"><a href="#">학생지원</a></div>
+                    </div>
+                </div>
+                <div class="headerbar">
+                    <a href="#"><img src="/static/common/images/header_logo.png" alt="그린대학교"></a>
+                    <ul id="quickmenu">
+                        <li><a href="#">대학소개</a>
+                            <ul class="sub_menu_list">
+                                <li><a href="#">총장 인사말</a></li>
+                                <li><a href="#">교육이념</a></li>
+                                <li><a href="#">연혁</a></li>
+                                <li><a href="#">조직도</a></li>
+                                <li><a href="#">오시는 길</a></li>
+                            </ul>
+                        </li>
+    
+                        <li><a href="#">입학안내</a>
+                            <ul class="sub_menu_list">
+                                <li><a href="#">공지사항</a></li>
+                                <li><a href="#">수시모집</a></li>
+                                <li><a href="#">정시모집</a></li>
+                                <li><a href="#">편입학</a></li>
+                                <li><a href="#">입학상담</a></li>
+                            </ul>
+                        </li>
+    
+                        <li><a href="#">대학·대학원</a>
+                            <ul class="sub_menu_list">
+                                <li><a href="#">인문사회대학</a></li>
+                                <li><a href="#">자연과학대학</a></li>
+                                <li><a href="#">공과대학</a></li>
+                                <li><a href="#">사범대학</a></li>
+                                <li><a href="#">대학원</a></li>
+                            </ul>
+                        </li>
+    
+                        <li><a href="#">학사안내</a>
+                            <ul class="sub_menu_list">
+                                <li><a href="#">공지사항</a></li>
+                                <li><a href="#">학사일정</a></li>
+                                <li><a href="#">수강신청</a></li>
+                                <li><a href="#">성적</a></li>
+                                <li><a href="#">수료 및 졸업</a></li>
+                                <li><a href="#">자주묻는질문</a></li>
+                            </ul>
+                        </li>
+    
+                        <li><a href="#">대학생활</a>
+                            <ul class="sub_menu_list">
+                                <li><a href="#">학생회소개</a></li>
+                                <li><a href="#">동아리/스터디</a></li>
+                                <li><a href="#">식단안내</a></li>
+                                <li><a href="#">갤러리</a></li>
+                            </ul>
+                        </li>
+    
+                        <li><a href="#">커뮤니티</a>
+                            <ul class="sub_menu_list">
+                                <li><a href="#">공지사항</a></li>
+                                <li><a href="#">뉴스 및 칼럼</a></li>
+                                <li><a href="#">취업정보</a></li>
+                                <li><a href="#">자유게시판</a></li>
+                                <li><a href="#">질문과 답변</a></li>
+                                <li><a href="#">자료실</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </header>
+            <div class="homebar">
+                <article class="inline">
+                    <a href="/static/common/"><img src="/static/common/images/ico-home.png" alt="homeico"></a>
+                    <img src="/static/common/images/bg-path-arrow.png" alt="arrowright">
+                    <a href="/static/Bachelor/BacNotice.html">학사안내</a>
+                    <img src="/static/common/images/bg-path-arrow.png" alt="arrowright">
+                    <a href="/static/Bachelor/BacNotice.html">공지사항</a>
+                </article>
+            </div>
+            <main>
+                <article class="side">
+                    <h4>학사안내</h4>
+                        <ul>
+                            <li><a href="/static/Bachelor/BacNotice.html">공지사항</a></li>
+                            <li><a href="/static/Bachelor/BacNotice.html">학사일정</a></li>
+                            <li><a href="/static/Bachelor/BacNotice.html">수강신청</a></li>
+                            <li><a href="/static/Bachelor/BacNotice.html">성적</a></li>
+                            <li><a href="/static/Bachelor/BacNotice.html">수료 및 졸업</a></li>
+                            <li><a href="/static/Bachelor/BacNotice.html">자주묻는질문</a></li>
+                        </ul>
+                </article>
+                <article class="notice">
+                    <div class="noticetop">
+                        <h4>공지사항</h4>
+                    </div>
+                    <div class="search">
+                        <select class="dropdown">
+                            <option>전체</option>
+                            <option>제목</option>
+                            <option>작성자</option>
+                            <option>내용</option>
+                        </select>
+                        <input type="text" value="검색어를 입력해 주세요">
+                        <div class="searchbtn"> 
+                            <a href="">검색</a>
+                        </div>
+                    </div>
+                    <div class="noticemain">
+                        <table>
+                            <tr>
+                                <th>번호</th>
+                                <th>제목</th>
+                                <th>작성자</th>
+                                <th>작성일</th>
+                                <th>조회</th>
+                            </tr>
+                            <tr>
+                                <td>3</td>
+                                <td><img src="/static/common/images/ico-new01.gif" alt="iconew">2025학년도 신입학 3차 추가모집 모집요강 및 모집...</td>
+                                <td>담당자</td>
+                                <td>24.04.09</td>
+                                <td>160</td>
+                            </tr>
+                            <tr>
+                                <td>2</td>
+                                <td><img src="/static/common/images/ico-new01.gif" alt="iconew">2025학년도 신입학 2차 추가모집 모집요강 및 모집...</td>
+                                <td>담당자</td>
+                                <td>24.04.09</td>
+                                <td>160</td>
+                            </tr>
+                            <tr>
+                                <td>1</td>
+                                <td>2025학년도 신입학 추가모집 모집요강 및 모집인원 공지</td>
+                                <td>담당자</td>
+                                <td>24.04.09</td>
+                                <td>160</td>
+                            </tr>
+                        </table>
+                        <article class="pagebtn">
+                            <a href=""><img src="/static/common/images/btn-first-page.png" alt="firstarr"></a>
+                            <a href=""><img src="/static/common/images/btn-prev-page.png" alt="firstarr"></a>
+                            <a href="">1</a>
+                            <a href="">2</a>
+                            <a href="">3</a>
+                            <a href=""><img src="/static/common/images/btn-last-page.png" alt="firstarr"></a>
+                            <a href=""><img src="/static/common/images/btn-next-page.png" alt="firstarr"></a>
+                        </article>
+                    </div>
+                </article>
+            </main>
+        </div>
+        
+    </body>
+</html>

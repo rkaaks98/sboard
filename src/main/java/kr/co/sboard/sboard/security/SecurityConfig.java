@@ -36,16 +36,14 @@ public class SecurityConfig {
              - Spring Security는 기본적으로 인가 페이지에 대해
                                 login 페이지로 redirect 수행
          */
-
-
-
-
         //인가 설정
         http.authorizeHttpRequests(authorize -> authorize
                 .requestMatchers("/").permitAll()
                 .requestMatchers("/admin/**").hasRole("ADMIN")
                 .requestMatchers("/manager/**").hasAnyRole("ADMIN","MANAGER")
                 .requestMatchers("/staff/**").hasAnyRole("ADMIN","MANAGER","STAFF")
+                .requestMatchers("/article/**").authenticated()
+                .requestMatchers("/user/**").permitAll()
                 .anyRequest().permitAll());
 
 

@@ -46,11 +46,11 @@ public class UserController {
     @PostMapping("/user/register")
     public String register(HttpServletRequest req, UserDTO userDTO){
 
-        String regip=req.getRemoteAddr();
+        String regip =req.getRemoteAddr();
         userDTO.setRegip(regip);
 
         userService.register(userDTO);
-
+        log.info("userDTO: {}", userDTO);
 
         return "redirect:/user/login";
     }
@@ -59,7 +59,8 @@ public class UserController {
     public String terms(Model model){
 
         TermsDTO termsDTO = termsService.terms();
-        model.addAttribute(termsDTO);
+        model.addAttribute("termsDTO", termsDTO);
+        log.debug("termsDTO: {}", termsDTO);
 
         return "/user/terms";
     }

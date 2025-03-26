@@ -16,6 +16,10 @@ server:
     servlet:
         context-path: /
 spring:
+    servlet:
+      multipart:
+          location: uploads
+          max-file-size: 10MB
     mail:
         host: smtp.gmail.com
         port: 587
@@ -30,7 +34,7 @@ spring:
                       enable: true
     application:
         name: sboard
-        version: '@version@'
+        version: ${version}
     datasource:
         driver-class-name: com.mysql.cj.jdbc.Driver
         password: Qwerty123@
@@ -42,7 +46,7 @@ spring:
     jpa:
         database: mysql
         hibernate:
-            ddl-auto: update
+            ddl-auto: none
             naming:
                 physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
         properties:
