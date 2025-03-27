@@ -5,6 +5,8 @@ import kr.co.sboard.sboard.dto.ArticleDTO;
 import kr.co.sboard.sboard.dto.FileDTO;
 import kr.co.sboard.sboard.dto.PageRequestDTO;
 import kr.co.sboard.sboard.dto.PageResponseDTO;
+import kr.co.sboard.sboard.entity.User;
+import kr.co.sboard.sboard.repository.UserRepository;
 import kr.co.sboard.sboard.service.ArticleService;
 import kr.co.sboard.sboard.service.FileService;
 import lombok.RequiredArgsConstructor;
@@ -14,6 +16,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import java.security.Principal;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -23,6 +26,19 @@ public class ArticleController {
 
     private final ArticleService articleService;
     private final FileService fileService;
+    private final UserRepository userRepository;
+
+    @GetMapping("/article/search")
+    public String search(PageRequestDTO pageRequestDTO, Model model) {
+        log.info("pageRequestDTO : {}", pageRequestDTO);
+
+        //서비스 호출
+        PageResponseDTO pageResponseDTO = articleService.searchAll(pageRequestDTO);
+
+        model.addAttribute("pageResponseDTO", pageResponseDTO);
+
+        return "/article/searchList";
+    }
 
     @GetMapping("/article/list")
     public String list(Model model, PageRequestDTO pageRequestDTO) {
@@ -37,7 +53,14 @@ public class ArticleController {
         return "/article/modify";
     }
     @GetMapping("/article/view")
-    public String view(){
+    public String view(int no, Model model){
+
+        //글 조회 서비스 호출
+        ArticleDTO articleDTO= articleService.findById(no);
+
+        model.addAttribute("articleDTO", articleDTO);
+
+
         return "/article/view";
     }
     @GetMapping("/article/write")
@@ -47,6 +70,7 @@ public class ArticleController {
     @PostMapping("/article/write")
     public String write(ArticleDTO articleDTO, HttpServletRequest request){
         String regip = request.getRemoteAddr();
+
         log.info("articleDTO: {}", articleDTO);
         articleDTO.setRegip(regip);
 
